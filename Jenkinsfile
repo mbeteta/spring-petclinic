@@ -6,18 +6,7 @@ pipeline {
 
         stage('build & unit tests') {
 
-            steps {
-
-                node(label:’build') {
-                            withMaven(globalMavenSettingsConfig: 'maven-settings',
-                            jdk: 'jdk-8',
-                            maven: 'mvn-3.3.9') {
-                        sh 'mvn clean install'
-                    }
-
-
-                    sleep(5)
-                }
+            steps {node(label:’build') {withMaven(globalMavenSettingsConfig: 'maven-settings',jdk: 'jdk-8',maven: 'mvn-3.3.9') {sh 'mvn clean install'}}
 
             }
         }
