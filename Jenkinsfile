@@ -17,10 +17,7 @@ pipeline {
 
             steps {
 
-                node(label:’build') {
-
                     sleep(5)
-                }
 
             }
         }
@@ -45,9 +42,9 @@ pipeline {
         stage('staging') {
 
             steps {
-                node('any') {
+
                     sleep(5)
-                }
+
             }
 
         }
@@ -63,9 +60,9 @@ pipeline {
         stage('deploy'){
 
             steps {
-                node('any') {
+
                     sleep(5)
-                }
+
             }
 
 
