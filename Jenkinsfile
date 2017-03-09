@@ -1,23 +1,14 @@
 pipeline {
 
-tools{
-        maven 'mvn-3.3.9'
-        jdk 'jdk-8'
-    }
-
     agent any
 
-
     stages {
-
         stage('build & unit tests') {
-
             steps {
 
-                node(label:’build') {
-                    withMaven(globalMavenSettingsConfig: 'maven-settings',jdk: 'jdk-8',maven: 'mvn-3.3.9') {
+                    withMaven(maven: 'M3') {
                         sh 'mvn clean install'}
-                }
+
 
             }
         }
