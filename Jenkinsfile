@@ -6,6 +6,8 @@ pipeline {
         jdk 'jdk-8'
     }
 
+stages{
+
     stage('build & unit tests') {
 
         node('build') {
@@ -66,4 +68,5 @@ sh 'mvn clean install'
         }
 
     }
+}
 }
