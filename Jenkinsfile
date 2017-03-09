@@ -8,7 +8,7 @@ pipeline {
 
             steps {
 
-                node('build') {
+                node(label:’build') {
 
                     withMaven(globalMavenSettingsConfig: 'maven-settings',
                             jdk: 'jdk-8',
@@ -27,7 +27,7 @@ pipeline {
 
             steps {
 
-                node('build') {
+                node(label:’build') {
 
                     sleep(5)
                 }
@@ -55,7 +55,7 @@ pipeline {
         stage('staging') {
 
             steps {
-                node {
+                node('any') {
                     sleep(5)
                 }
             }
@@ -75,7 +75,7 @@ pipeline {
         stage('deploy'){
 
             steps {
-                node {
+                node('any') {
                     sleep(5)
                 }
             }
