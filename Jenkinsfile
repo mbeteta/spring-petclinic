@@ -9,8 +9,7 @@ pipeline {
             steps {
 
                 node(label:’build') {
-
-                    withMaven(globalMavenSettingsConfig: 'maven-settings',
+                            withMaven(globalMavenSettingsConfig: 'maven-settings',
                             jdk: 'jdk-8',
                             maven: 'mvn-3.3.9') {
                         sh 'mvn clean install'
