@@ -1,72 +1,89 @@
 pipeline {
 
+    agent any
 
-    tools{
-        maven 'mvn-3.3.9'
-        jdk 'jdk-8'
-    }
+    stages {
 
-stages{
-
-    stage('build & unit tests') {
-
-        node('build') {
+        stage('build & unit tests') {
 
             steps {
-                withMaven(globalMavenSettingsConfig: 'maven-settings',
-                    jdk: 'jdk-8',
-                    maven: 'mvn-3.3.9') {
-sh 'mvn clean install'
+
+                node('build') {
+
+                    withMaven(globalMavenSettingsConfig: 'maven-settings',
+                            jdk: 'jdk-8',
+                            maven: 'mvn-3.3.9') {
+                        sh 'mvn clean install'
+                    }
+
+
+                    sleep(5)
                 }
 
             }
-
-
-            sleep(5)
-        }
-    }
-
-    stage('static analysis') {
-
-        node('build') {
-
-            sleep(5)
-        }
-    }
-
-    stage('acceptance-tests') {
-
-        parallel (
-
-                chrome: { sleep(5) },
-                edge: { sleep(5) },
-                firefox: { sleep(5) }
-        )
-        input message: 'Déploiement en production?', ok:'Oui'
-
-    }
-
-
-    stage('staging') {
-
-        node {
-            sleep(5)
         }
 
-    }
-    stage('manual-approval'){
+        stage('static analysis') {
 
-        node {
-            sleep(5)
+            steps {
+
+                node('build') {
+
+                    sleep(5)
+                }
+
+            }
         }
 
-    }
-    stage('deploy'){
+        stage('acceptance-tests') {
 
-        node {
-            sleep(5)
+            steps {
+
+                parallel (
+
+                        chrome: { sleep(5) },
+                        edge: { sleep(5) },
+                        firefox: { sleep(5) }
+                )
+
+
+            }
+
         }
 
+
+        stage('staging') {
+
+            steps {
+                node {
+                    sleep(5)
+                }
+            }
+
+
+
+        }
+        stage('manual-approval'){
+
+            steps {
+                input message: 'Déploiement en production?', ok:'Oui'
+            }
+
+
+
+        }
+        stage('deploy'){
+
+            steps {
+                node {
+                    sleep(5)
+                }
+            }
+
+
+        }
+
+
     }
-}
+
 }
